@@ -1,4 +1,4 @@
-# SEO Checker
+# SEO Checker [![Build Status](https://travis-ci.org/Clever-Labs/seo-checker.svg?branch=master)](https://travis-ci.org/Clever-Labs/seo-checker)
 
 > A library for checking basic SEO signals on a web page
 
