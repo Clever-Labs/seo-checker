@@ -7,7 +7,6 @@
 // Set up requires
 var cheerio = require('cheerio'),
     request = require('request'),
-    util    = require('util'), // TODO: Remove in production
     Crawler = require('simplecrawler');
 
 module.exports = {
@@ -56,7 +55,6 @@ module.exports = {
       }
     });
     page.imgAccessibility = (accessibleImgs / totalImgs) * 100;
-    //console.log(util.inspect(page)); // TODO: Remove console.log calls
     return page;
   },
   // Crawl multiple pages of a website
