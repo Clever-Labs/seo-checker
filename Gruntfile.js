@@ -11,9 +11,10 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     app: {
       dev: 'src',
-      dist: 'dist',
+      bin: 'bin',
+      docs: 'docs',
       test: 'test',
-      codeName: 'Snake Oil'
+      codeName: 'Turkey Gobbler'
     },
 
     // Watch for changes
@@ -36,7 +37,7 @@ module.exports = function(grunt) {
       options: {
         reporter: require('jshint-stylish')
       },
-      dev: ['<%= app.dev %>/**/*.js', '<%= app.test %>/test/**/*.js', 'Gruntfile.js']
+      dev: ['<%= app.dev %>/**/*.js', '<%= app.bin %>/**/*.js', '<%= app.test %>/test/**/*.js', 'Gruntfile.js']
     },
 
     // Check for todos
@@ -47,12 +48,29 @@ module.exports = function(grunt) {
       src: ['<%= app.dev %>/**/*.js', 'README.md', '<%= app.test %>/**/*.js', 'Gruntfile.js', 'package.json']
     },
 
+    // Document code
+    docco: {
+      all: {
+        src: ['<%= app.dev %>/**/*.js', '<%= app.test %>/**/*.js'],
+        options: {
+          output: '<%= app.docs %>/'
+        }
+      }
+    },
+
     // Run tests
     nodeunit: {
       all: ['<%= app.test %>/*_test.js'],
       options: {
         reporter: 'default',
         reporterOutput: '<%= app.test %>/results/<%= grunt.template.today("yyyymmdd") %>-test-results.txt'
+      }
+    },
+
+    // Run shell commands
+    shell: {
+      publish: {
+        command: ['git add .', 'git commit -m "<%= grunt.option("message") %>"', 'npm publish'].join('&&')
       }
     }
   });
@@ -62,8 +80,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('develop', ['watch']);
 
-  grunt.registerTask('build', []);
+  grunt.registerTask('build', [
+    'jshint',
+    'nodeunit',
+    'todos'
+    ]);
 
-  grunt.registerTask('publish', []);
+  grunt.registerTask('publish', ['build', 'shell:publish']);
 
 };
