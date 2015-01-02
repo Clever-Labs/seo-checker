@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       options: {
         verbose: false
       },
-      src: ['<%= app.dev %>/**/*.js', 'README.md', '<%= app.test %>/**/*.js']
+      src: ['<%= app.dev %>/**/*.js', 'README.md', '<%= app.test %>/**/*.js', 'Gruntfile.js', 'package.json']
     },
 
     // Run tests
@@ -52,9 +52,7 @@ module.exports = function(grunt) {
       all: ['<%= app.test %>/*_test.js'],
       options: {
         reporter: 'default',
-        reporterOptions: {
-          output: '<%= app.test %>/results/'
-        }
+        reporterOutput: '<%= app.test %>/results/<%= grunt.template.today("yyyymmdd") %>-test-results.txt'
       }
     }
   });
@@ -63,5 +61,9 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['develop']);
 
   grunt.registerTask('develop', ['watch']);
+
+  grunt.registerTask('build', []);
+
+  grunt.registerTask('publish', []);
 
 };
