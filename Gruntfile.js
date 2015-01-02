@@ -45,7 +45,9 @@ module.exports = function(grunt) {
       options: {
         verbose: false
       },
-      src: ['<%= app.dev %>/**/*.js', 'README.md', '<%= app.test %>/**/*.js', 'Gruntfile.js', 'package.json']
+      all: {
+        src: ['<%= app.dev %>/**/*.js', 'README.md', '<%= app.test %>/**/*.js', 'Gruntfile.js', 'package.json']
+      }
     },
 
     // Document code
