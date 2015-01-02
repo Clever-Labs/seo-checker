@@ -1,5 +1,6 @@
 /**
  * SEO Checker Test Suite
+ * ----------------------
  * This file is for pre-build tests
  */
 
@@ -10,14 +11,20 @@ exports.testTest = function(test) {
   test.done();
 };
 
-// Load tests
+// Begin test definitions
 module.exports = {
+  /**
+   * ## Setup method
+   *
+   * Creates a new instance of SEO Checker
+   * to use in tests
+   */
   setUp: function(callback) {
     this.seo = require('../src/index.js');
     callback();
   },
   /**
-   * Smoke Test
+   * ## Smoke Test
    *
    * This is a test that should always pass. If it
    * ever fails then there is something wrong with your
@@ -43,14 +50,15 @@ module.exports = {
         test.equal(typeof response, 'string');
         test.done();
         return false;
+      } else {
+        test.expect(1);
+        test.equal(typeof response, 'string');
+        test.done();
       }
-      test.expect(1);
-      test.equal(typeof response, 'string');
-      test.done();
     });
   },
   /**
-   * Parse page metadata
+   * ## Parse page metadata
    *
    * This test checks that the meta data of a page has been
    * parsed using a known file.
@@ -63,5 +71,25 @@ module.exports = {
       test.equal(typeof page, 'object');
       test.done();
     });
-  }
+  },
+  /**
+   * ## Crawl multiple pages at once
+   *
+   * Tests crawl/parse combo functionality.
+   * Expect an array of objects each containing
+   * data identical to the `meta` function.
+   */
+   crawlTest: function(test) {
+    var crawl = this.seo.crawl('https://cleverwebdesign.net', { htmlOnly: true }, function(page) {
+      //test.expect(3);
+      test.ok(page, 'Page object should exist in resulting array');
+
+      page.forEach(function(seo) {
+        test.equal(seo.imgAccessibility, 100, 'Image accessibility score should be 100%');
+      });
+
+      test.equal(page.length, 10, '10 pages should have been tested');
+      test.done();
+    });
+   }
 };
