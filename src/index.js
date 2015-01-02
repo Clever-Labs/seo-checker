@@ -91,7 +91,7 @@ module.exports = {
       if (crawlResults.length >= maxPages) {
         this.stop(); // Stop the crawler
         crawlResults.forEach(function(page, index, results) {
-          parsedPages.push(seoParser(page.body));
+          parsedPages.push({url: page.url, results: seoParser(page.body)});
         });
         if (!callback) {
           return parsedPages;
