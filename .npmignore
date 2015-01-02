@@ -1,0 +1,11 @@
+# Files that npm does not need
+#
+# - Tests - end users don't need tests
+# 	to bloat their project. We already use
+# 	way too many dependencies as it is. Get
+# 	the development version if you want to run
+# 	tests or just check our Travis builds:
+# 	https://travis-ci.org/Clever-Labs/seo-checker
+
+test/
+docs/
