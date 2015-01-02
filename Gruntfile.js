@@ -65,7 +65,7 @@ module.exports = function(grunt) {
       all: ['<%= app.test %>/*_test.js'],
       options: {
         reporter: 'default',
-        reporterOutput: '<%= app.test %>/results/<%= grunt.template.today("yyyymmdd") %>-test-results.txt'
+        //reporterOutput: '<%= app.test %>/results/<%= grunt.template.today("yyyymmdd") %>-test-results.txt'
       }
     },
 
