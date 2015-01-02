@@ -1,3 +1,27 @@
+# SEO Checker Ignores
+#
+# There are generally a handful of
+# file types we never want to commit:
+#
+# - OS-created files (like .DS_Store on OSX)
+# - Dependencies - These should be reproduced
+# 	identically through an install process, not
+# 	saved into the project itself.
+# - Environment configuration files - Things like
+# 	.nvmrc files that prescribe a certain Node
+# 	version should be left to each developer to
+# 	implement. Libraries should work across a 
+# 	range of platform versions (within reason).
+# - Log files - Logs are useful to individual
+# 	developers but don't need to be part of the 
+# 	project's commit history. Share logs individually.
+# - Test results - Same reason we don't commit logs and
+# 	test results should be duplicated exactly across
+# 	environments.
+
 node_modules/
 dist/
+test/results/
 .nvmrc
+.DS_Store
+*.log
