@@ -85,7 +85,8 @@ module.exports = {
       test.ok(page, 'Page object should exist in resulting array');
 
       page.forEach(function(seo) {
-        test.equal(seo.imgAccessibility, 100, 'Image accessibility score should be 100%');
+        test.equal(typeof seo.url, 'string', 'Results should return URL as a string');
+        test.equal(seo.results.imgAccessibility, 100, 'Image accessibility score should be 100%');
       });
 
       test.equal(page.length, 10, '10 pages should have been tested');
