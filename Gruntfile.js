@@ -12,7 +12,8 @@ module.exports = function(grunt) {
     app: {
       dev: 'src',
       dist: 'dist',
-      test: 'test'
+      test: 'test',
+      codeName: 'Snake Oil'
     },
 
     // Watch for changes
