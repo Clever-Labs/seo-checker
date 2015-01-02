@@ -18,10 +18,26 @@
 # - Test results - Same reason we don't commit logs and
 # 	test results should be duplicated exactly across
 # 	environments.
+# - Documentation - Generated docs should be published online
+# 	and because they can change with each commit they
+# 	should be generated locally as-needed with the latest
+# 	information from the last release always available online.
 
 node_modules/
 dist/
 test/results/
+docs/
 .nvmrc
 .DS_Store
 *.log
+
+# Other things we don't have in our repo but
+# that are common and a good idea to ignore in
+# case we add them later and forget to update 
+# this .gitignore file.
+pids
+*.pid
+*.seed
+.grunt
+.lock-wscript
+build/Release
