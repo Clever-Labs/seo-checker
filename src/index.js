@@ -32,7 +32,7 @@ module.exports = {
         page  = {};
 
     // Meta signals
-    page.title = $('title').text();
+    page.title = $('title').text() || null;
     page.description = $('meta[name=description]').attr('content') || null;
     page.author = $('meta[name=author]').attr('content') || null;
     page.keywords = $('meta[name=keywords]').attr('content') || null;
