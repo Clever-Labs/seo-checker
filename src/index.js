@@ -1,6 +1,6 @@
 /**
  * SEO Checker
- * Copyright (c) 2014 Clever Labs / MIT Licensed (See License)
+ * Copyright (c) 2014 - 2015 Clever Labs / MIT Licensed
  * A library to do some basic SEO checks. 
  */
 
@@ -10,7 +10,19 @@ var cheerio = require('cheerio'),
     Crawler = require('simplecrawler');
 
 module.exports = {
-  // Make request and return response body
+  /**
+   * Load HTML for a single URL
+   *
+   * Use this to fetch the contents of a single URL then
+   * pass the result to the `meta` function or any other
+   * code that can parse or transform the response body of 
+   * an HTTP request.
+   *
+   * `url` [String] - URL of page to read
+   * `callback` [Function] - Function to call on completion
+   *
+   * Returns the response body of an HTTP request as a string
+   */
   load: function(url, callback) {
     // Check if user input protocol
     if (url.indexOf('http://') < 0 && url.indexOf('https://') < 0) { // TODO: Turn this into its own function
@@ -26,7 +38,16 @@ module.exports = {
       return callback(false);
     });
   },
-  // Parse out the meta data
+  
+  /**
+   * Parse meta data from an HTTP response body
+   *
+   * `body` [String] - The HTML of a web page to parse
+   *
+   * Returns an object containing data related to the SEO
+   * signals of the page that was parsed. Pass the result to
+   * another function to determine an "SEO score".
+   */
   meta: function(body) {
     var $     = cheerio.load(body),
         page  = {};
@@ -57,7 +78,28 @@ module.exports = {
     page.imgAccessibility = (accessibleImgs / totalImgs) * 100;
     return page;
   },
-  // Crawl multiple pages of a website
+  
+  /**
+   * Generate SEO data for multiple pages of a site at once
+   *
+   * `url` [String] - The URL to begin the crawl
+   * `options` [Object] - Options to pass to the crawler. Uses a subset of the `simplecrawler` lib's options:
+   *  - `maxPages` [Number] - The max number of pages to crawl (defaults to 10)
+   *  - `interval` [Number] - Delay between each request for a new page
+   *  - `maxDepth` [Number] - Depth of crawl. See simplecrawler docs for an explanation
+   *  - `maxConcurrency` [Number] - Number of processes to spawn at a time
+   *  - `timeout` [Number] - Time to wait for a server response before moving on
+   *  - `downloadUnsupported` [Boolean] - Determines whether crawler downloads files it cannot parse
+   *  - `userAgent` [String] - The UA string to send with requests
+   *  - `htmlOnly` [Boolean] - Tells crawler not to crawl any non-HTML text/html pages. This is a required option and has no default
+   *
+   * Returns an array of objects containing SEO data and URL. Example return value:
+   *
+   *    [{
+   *      url: 'http://example.com/page1.html',
+   *      results: { <results object identical to signature of this.meta()'s return value> }
+   *    }]
+   */
   crawl: function(url, options, callback) {
     var crawler       = Crawler.crawl(url),
         opts          = options || {},
@@ -76,7 +118,7 @@ module.exports = {
     crawler.userAgent           = opts.useragent || 'SEO Checker v1 (https://github.com/Clever-Labs/seo-checker)';
 
     // Only fetch HTML! You should always set this option unless you have a good reason not to
-    if (opts.htmlOnly === true) { // Being explicit about truthy values
+    if (opts.htmlOnly === true) { // Being explicit about truthy values here
       var htmlCondition = crawler.addFetchCondition(function(parsedURL) {
         return !parsedURL.path.match(/\.jpg|jpeg|png|gif|js|txt|css|pdf$/i);
       });
