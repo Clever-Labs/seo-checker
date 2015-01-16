@@ -1,6 +1,6 @@
 {
   "name": "seo-checker",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A library for checking basic SEO signals of a website",
   "main": "src/index.js",
   "scripts": {
@@ -25,7 +25,8 @@
   "dependencies": {
     "cheerio": "^0.18.0",
     "request": "^2.51.0",
-    "simplecrawler": "^0.3.10"
+    "simplecrawler": "^0.3.10",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
