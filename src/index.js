@@ -30,7 +30,7 @@ module.exports = {
     }
 
     // Make request and fire callback
-    request.get(url, function(error, response, body) {
+    request.get(url.toLowerCase(), function(error, response, body) {
       if (!error && response.statusCode === 200) {
         return callback(body);
       }
@@ -101,7 +101,7 @@ module.exports = {
    *    }]
    */
   crawl: function(url, options, callback) {
-    var crawler       = Crawler.crawl(url),
+    var crawler       = Crawler.crawl(url.toLowerCase()),
         opts          = options || {},
         maxPages      = opts.maxPages || 10,
         parsedPages   = [],         // Store parsed pages in this array
