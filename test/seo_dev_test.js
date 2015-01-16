@@ -23,6 +23,7 @@ module.exports = {
     this.seo = require('../src/index.js');
     callback();
   },
+
   /**
    * ## Smoke Test
    *
@@ -31,12 +32,15 @@ module.exports = {
    * environment or test code but not the application.
    */
   smokeTest: function(test) {
+    test.expect(2);
     var a = true;
     test.equal(a, true);
+    test.ok(true, 'Smoke test says true === true. Looks good to me. Moving on...');
     test.done();
   },
+
   /**
-   * Load HTML from Host
+   * ## Load HTML from Host
    *
    * Test the ability to load the contents of a URL
    * as a string so it can be passed to another function
@@ -57,6 +61,34 @@ module.exports = {
       }
     });
   },
+
+  /**
+   * ### URL Formatting Test
+   *
+   * Test ability to handle URLs of different formats
+   * like uppercase, with spaces, etc.
+   */
+  urlFormattingTest: function(test) {
+    var hosts = ['cleverwebdesign.net', 'google.com', 'CleverWebDesign.net', 'http://google.com', 'invalid domain'];
+    var loadMethod = this.seo.load;
+
+    test.expect(1); // TODO: Is this the correct amount of assertions to expect for this async code?
+
+    // Test each domain in turn
+    hosts.forEach(function(hostname, index) {
+      loadMethod(hostname, function(response) {
+        if (!response && index === 4) { // TODO: Automatically fail the test if this happens
+          // Runs when there's an invalid domain
+          test.ok(!response, 'No server response for ' + hostname);
+        } else {
+          test.equal(typeof response, 'string');
+        }
+        // Finish the test when loop completes
+        if (index === (hosts.length - 1)) { test.done(); }
+      });
+    });
+  },
+
   /**
    * ## Parse page metadata
    *
@@ -72,6 +104,7 @@ module.exports = {
       test.done();
     });
   },
+
   /**
    * ## Crawl multiple pages at once
    *
