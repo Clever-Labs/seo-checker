@@ -13,7 +13,10 @@ Require the library and then all the methods listed below will be made available
 ```js
 var seochecker = require('seo-checker');
 
-var pageBody = seochecker.load('http://google.com');
+seochecker.load('http://google.com', function(data) {
+  // Response data is available here. 
+  // Now you can call seochecker.meta() to get the SEO data
+});
 ```
 
 ### Parsing Pages
